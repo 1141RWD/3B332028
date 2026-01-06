@@ -1,1 +1,571 @@
 
+:root {
+  --bg1: #0a0a12;
+  --bg2: #141427;
+  --accent: #ff4da6;
+  --text: #e8eaf6;
+  --muted: #aab0c0;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: "Noto Sans TC", system-ui, -apple-system, "Microsoft JhengHei", sans-serif;
+  color: var(--text);
+  background: linear-gradient(120deg, var(--bg1), var(--bg2));
+  overflow-x: hidden;
+  /* --- 新增/修改以下這兩行 --- */
+  font-size: 14px; /* 原本大約是 16px，縮小為 14px */
+  line-height: 1.6; /* 讓文字間距更緊湊一點 */
+}
+
+/* 容器與區段 */
+.section { padding: 72px 20px; position: relative; }
+.container { max-width: 800px; margin: 0 auto; }
+h1, h2, h3 { margin: 0 0 14px; }
+p { line-height: 1.8; color: var(--muted); }
+
+/* Hero 粒子＋漸層動畫 */
+/* 縮小 Hero 高度 */
+.hero { 
+  position: relative; 
+  height: 100vh; /* 原本是 68vh */
+  display: grid; 
+  place-items: center; 
+  overflow: hidden; 
+}
+
+/* 縮小標題字體 */
+.hero-title { 
+  font-size: clamp(30px, 6vw, 64px); /* 原本最大是 80px，縮小至 64px */
+}#bg-particles { position: absolute; inset: 0; }
+.hero::before {
+  content: "";
+  position: absolute; inset: -40%;
+  background: conic-gradient(from 180deg at 50% 50%, #1b1b35, #241c38, #1b1b35);
+  filter: blur(60px); animation: swirl 18s linear infinite;
+  opacity: 0.6;
+}
+@keyframes swirl { to { transform: rotate(360deg); } }
+.hero-inner { position: relative; z-index: 2; text-align: center; }
+.hero-title { font-size: clamp(36px, 8vw, 80px); letter-spacing: 2px; }
+.hero-title .line { display: block; transform: translateY(24px); opacity: 0; }
+.hero-title .accent { color: var(--accent); text-shadow: 0 0 24px rgba(255,77,166,.25); }
+.hero-sub { margin: 8px 0 24px; font-size: 18px; opacity: .85; }
+.cta {
+  display: inline-block; padding: 12px 20px; border: 2px solid var(--accent);
+  color: var(--accent); text-decoration: none; border-radius: 999px;
+  transition: transform .3s ease, background .3s ease, color .3s ease;
+}
+.cta:hover { transform: translateY(-3px); background: var(--accent); color: #0a0a12; }
+
+/* 介紹區 */
+.intro .info-grid {
+  display: grid; grid-template-columns: 1.2fr .8fr; gap: 24px; align-items: start;
+}
+.info-card {
+  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px; padding: 20px; backdrop-filter: blur(6px);
+  box-shadow: 0 10px 30px rgba(0,0,0,.3);
+}
+.info-card h3 { color: #fff; }
+.info-image {
+  overflow: hidden; border-radius: 16px; position: relative;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+.info-image img { width: 100%; display: block; transform: scale(1.05); transition: transform 12s ease; }
+.info-image:hover img { transform: scale(1.12); }
+.info-image figcaption {
+  position: absolute; left: 16px; bottom: 12px; color: #fff; background: rgba(0,0,0,.35);
+  padding: 8px 12px; border-radius: 10px; font-size: 14px;
+}
+
+/* 打字效果 */
+.typing-js {
+  font-size: 18px;
+  line-height: 1.8;
+  color: var(--muted);
+  white-space: normal;
+  overflow-wrap: break-word;
+  min-height: 120px;
+}
+@keyframes typing { from { width: 0; } to { width: 100%; } }
+@keyframes caret { 50% { border-color: transparent; } }
+
+/* Reveal（滾動揭示） */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* Tilt（懸浮傾斜） */
+.tilt { transform-style: preserve-3d; transition: transform .2s ease; }
+
+/* Gallery 瀑布流 */
+.gallery .masonry {
+  column-count: 3; column-gap: 16px;
+}
+.gallery .card {
+  display: inline-block; width: 100%; margin: 0 0 16px;
+  background: rgba(255,255,255,.05); border-radius: 14px; overflow: hidden;
+  border: 1px solid rgba(255,255,255,.08);
+}
+.gallery .card img { width: 100%; display: block; }
+.gallery .card figcaption { padding: 10px 12px; color: #d7dbee; }
+
+/* Hover 3D */
+.hover-3d { perspective: 800px; }
+.hover-3d img { transform: rotateX(0) rotateY(0); transition: transform .2s ease; }
+.hover-3d:hover img { transform: rotateX(4deg) rotateY(-6deg) scale(1.02); }
+
+/* 走馬燈 */
+.marquee { overflow: hidden; border-top: 1px solid rgba(255,255,255,.08); border-bottom: 1px solid rgba(255,255,255,.08); margin-top: 24px; }
+.track { display: inline-flex; gap: 24px; padding: 12px 0; animation: scrollX 22s linear infinite; }
+.track img { height: 120px; filter: drop-shadow(0 6px 12px rgba(0,0,0,.35)); }
+@keyframes scrollX { to { transform: translateX(-50%); } }
+
+/* Timeline */
+.timeline { position: relative; margin-top: 24px; }
+.timeline::before {
+  content: ""; position: absolute; left: 24px; top: 0; bottom: 0;
+  width: 2px; background: linear-gradient(to bottom, var(--accent), transparent);
+}
+.tl-item { position: relative; padding-left: 64px; margin: 24px 0; }
+.tl-item .dot {
+  position: absolute; left: 16px; top: 10px; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 20px rgba(255,77,166,.6);
+  animation: pulse 2.2s infinite ease-in-out;
+}
+@keyframes pulse { 50% { transform: scale(1.25); } }
+.tl-item .content { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 12px 14px; }
+.tl-item .date { display: inline-block; margin-top: 8px; color: var(--muted); font-size: 14px; }
+
+/* 簽名區域容器 */
+/* styles.css */
+
+/* 1. 移除 signature 區段底部多餘的 margin 和 padding */
+.signature-section {
+  padding-top: 20px;
+  padding-bottom: 0px !important; /* 強制移除 */
+  margin-bottom: -20px; /* 視情況微調，讓它更靠近 footer */
+}
+
+/* 2. 標題與簽名的間距縮小 */
+.sig-title {
+  margin-bottom: 10px;
+}
+
+/* 3. 調整 SVG 容器 */
+.sig {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  /* 強大的霓虹粉發光感 */
+  filter: drop-shadow(0 0 12px rgba(255, 77, 166, 0.8));
+}
+
+/* 4. 動畫邏輯 (維持穩定) */
+.sig-path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  opacity: 0;
+}
+
+.sig.start-animation .sig-path {
+  opacity: 1;
+  animation: drawSignature 3s cubic-bezier(0.45, 0, 0.55, 1) forwards;
+}
+
+/* 依序書寫順序延遲 */
+.sig.start-animation .sig-path:nth-child(1) { animation-delay: 0.1s; } /* R */
+.sig.start-animation .sig-path:nth-child(2) { animation-delay: 0.8s; } /* u */
+.sig.start-animation .sig-path:nth-child(3) { animation-delay: 1.2s; } /* k */
+.sig.start-animation .sig-path:nth-child(4) { animation-delay: 1.7s; } /* A */
+.sig.start-animation .sig-path:nth-child(5) { animation-delay: 2.2s; } /* ♡ */
+.sig.start-animation .sig-path:nth-child(6) { animation-delay: 2.8s; stroke-width: 4; } /* 底線 */
+
+@keyframes drawSignature {
+  to { stroke-dashoffset: 0; }
+}
+/*上方是簽名*/
+/* Footer */
+.footer { padding: 28px 20px; text-align: center; color: var(--muted); border-top: 1px solid rgba(255,255,255,.08); }
+
+/* RWD */
+@media (max-width: 960px) {
+  .intro .info-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .gallery .masonry { column-count: 2; }
+  .track img { height: 96px; }
+}
+@media (max-width: 480px) {
+  .gallery .masonry { column-count: 1; }
+  .hero { height: 56vh; }
+}
+/* Grid Gallery */
+/* 統一網格容器 */
+.grid-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* 自動填滿，最小300px */
+  gap: 20px;
+  margin-top: 30px;
+}
+
+/* 圖片外層容器：控制比例 */
+.img-container {
+  width: 100%;
+  aspect-ratio: 3 / 4; /* 設定統一比例，如 3:4 或 1:1 */
+  overflow: hidden;
+  background: #1a1a2e;
+}
+
+.grid-gallery img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 關鍵：裁切圖片以填滿容器，不擠壓 */
+  object-position: center top; /* 針對人像，優先顯示上方（頭部） */
+  transition: transform 0.5s ease;
+}
+
+/* 懸浮效果強化 */
+.grid-gallery figure:hover img {
+  transform: scale(1.1);
+}
+
+.grid-gallery figure {
+  margin: 0;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.grid-gallery figcaption {
+  padding: 15px;
+  font-size: 0.95rem;
+  text-align: center;
+  color: var(--muted);
+}
+/* styles.css: 跑馬燈圖片集樣式 */
+
+.marquee-gallery {
+  width: 100%;
+  overflow: hidden;
+  padding: 40px 0;
+  position: relative;
+  /* 兩側淡出效果，增加高級感 */
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content; /* 確保軌道寬度隨內容伸展 */
+  animation: galleryScroll 30s linear infinite;
+}
+
+/* 滑鼠懸停時暫停動畫，方便使用者看清楚圖片 */
+.marquee-gallery:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-track .card {
+  width: 250px; /* 固定卡片寬度 */
+  margin: 0 15px;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.marquee-track .card img {
+  width: 100%;
+  height: 320px; /* 統一高度解決混亂問題 */
+  object-fit: cover; /* 裁切圖片填滿容器 */
+  display: block;
+}
+
+.marquee-track figcaption {
+  padding: 12px;
+  font-size: 14px;
+  text-align: center;
+  color: var(--muted);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* 滾動動畫：從 0 移到 -50% (因為我們放了兩組重複的圖片) */
+@keyframes galleryScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* styles.css */
+
+/* 初始隱藏狀態：稍微往下並變透明 */
+.tl-item.reveal {
+  opacity: 0;
+  transform: translateX(-30px); /* 從左側滑入的感覺 */
+  transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* 當 IntersectionObserver 觸發並加上 .in 時 */
+.tl-item.reveal.in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* 增加交錯出現的延遲感 (Staggered Delay) */
+.tl-item:nth-child(2) { transition-delay: 0.1s; }
+.tl-item:nth-child(3) { transition-delay: 0.2s; }
+.tl-item:nth-child(4) { transition-delay: 0.3s; }
+
+/* 導覽列基礎樣式 */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  background: rgba(10, 10, 18, 0.8);
+  backdrop-filter: blur(10px);
+}
+
+.navbar .logo {
+  font-weight: bold;
+  color: var(--accent);
+  letter-spacing: 2px;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+  margin: 0;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: var(--accent);
+}
+
+/* 漢堡按鈕樣式 (預設隱藏，手機版顯示) */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.menu-toggle .bar {
+  width: 30px;
+  height: 3px;
+  background-color: var(--accent);
+  transition: 0.3s;
+}
+
+/* 手機版 RWD 樣式 */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: flex;
+  }
+
+  .nav-links {
+    position: fixed;
+    right: -100%; /* 預設在螢幕外 */
+    top: 0;
+    height: 100vh;
+    width: 70%;
+    background: var(--bg2);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: 0.4s ease;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+  }
+
+  .nav-links.active {
+    right: 0; /* 點擊後滑入 */
+  }
+
+  /* 漢堡按鈕變成 X 的動畫 */
+  .menu-toggle.active .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+  .menu-toggle.active .bar:nth-child(2) { opacity: 0; }
+  .menu-toggle.active .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+}
+/* 1. 讓全網頁具備平滑捲動效果 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 2. 導覽列固定在頂部 */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 5%;
+  background: rgba(10, 10, 18, 0.85); /* 半透明背景 */
+  backdrop-filter: blur(8px); /* 磨砂玻璃效果 */
+}
+
+/* 3. 解決跳轉後標題被導覽列遮住的問題 */
+section {
+  scroll-margin-top: 80px; /* 數值約等於導覽列的高度 */
+}
+
+/* 讓標題與按鈕並排 */
+/* 1. 讓標題與按鈕水平並排 */
+/* 確保標題與按鈕區塊與下方保持距離 */
+.section-header {
+  display: flex;
+  align-items: center; /* 讓標題和按鈕垂直置中對齊 */
+  gap: 20px;
+  margin-bottom: 20px; /* 增加底部間距，防止擋到下方的內容 */
+  width: 100%;
+}
+
+.section-header h2 {
+  margin-bottom: 0; /* 移除標題預設的下邊距 */
+}
+
+/* 確保 info-grid 不會往上擠 */
+/* 確保介紹區塊對齊 */
+.intro .info-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 30px;
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
+}
+
+/* 針對右側圖片容器 */
+.info-image {
+  width: 80%;
+  max-width: 250px; /* 限制最大寬度防止過大跑位 */
+  margin: 0 auto;   /* 強制水平置中 */
+  display: block;
+}
+
+.info-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
+/* 修正官方資訊按鈕的對齊 */
+.section-header {
+  display: flex;
+  align-items: baseline; /* 讓文字底部對齊 */
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+/* 確保打字機文字不會推擠空間 */
+.typing-js {
+  min-height: 80px;
+  margin-bottom: 20px;
+}
+
+/* 手機版自動切換為單欄置中 */
+@media (max-width: 768px) {
+  .intro .info-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+/* 2. 微調按鈕樣式，讓它更精緻一點 */
+.btn-official {
+  text-decoration: none;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 5px 15px;
+  border-radius: 6px;
+  font-size: 14px;
+  background: rgba(255, 77, 166, 0.1);
+  transition: 0.3s;
+}
+
+.btn-official:hover {
+  background: var(--accent);
+  color: #000;
+}
+
+
+/* 手機版 RWD 調整：如果螢幕太窄就讓它們換行 */
+@media (max-width: 480px) {
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
+/* 電腦版隱藏漢堡按鈕 */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 21px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.menu-toggle .bar {
+  height: 3px;
+  width: 100%;
+  background-color: var(--accent);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+/* 官方資訊導覽項目的特殊顏色 (選填) */
+.nav-official {
+  color: var(--accent) !important;
+  font-weight: bold;
+}
+
+/* 手機版樣式 (通常設定在 768px 以下) */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: flex; /* 確保手機版顯示按鈕 */
+  }
+
+  .nav-links {
+    position: fixed;
+    right: -100%; /* 預設藏在右邊 */
+    top: 0;
+    height: 100vh;
+    width: 70%;
+    background: var(--bg2);
+    flex-direction: column;
+    padding-top: 100px;
+    transition: 0.4s ease;
+    z-index: 1000;
+  }
+
+  .nav-links.active {
+    right: 0; /* 點擊後滑入 */
+  }
+}/* styles.css */
